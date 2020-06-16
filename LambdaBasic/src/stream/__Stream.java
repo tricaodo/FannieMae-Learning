@@ -3,13 +3,15 @@ package stream;
 import models.Gender;
 import models.Person;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class __Stream {
     public static void main(String[] args) {
-        List<Person> people = listSupplier.get();
+        List<Person> people = new ArrayList<>(listSupplier.get());
 
         // 1. Print all genders.
         people.stream()
@@ -27,6 +29,13 @@ public class __Stream {
         boolean hasFemale = people.stream()
                 .allMatch(person -> person.getGender().equals(Gender.FEMALE));
         System.out.println(hasFemale);
+
+        // 4. Found a specific person and return.
+        Optional<Person> matchingPerson = people.stream()
+                .filter(person -> person.getName().equals("Jesssica"))
+                .findFirst();
+        Person foundPerson = matchingPerson.orElse(null);
+        System.out.println("Found person: " + foundPerson);
 
     }
 
