@@ -62,7 +62,10 @@ public class UserDaoService {
      * @param id         the user's id which we want to update.
      * @param updateUser the new user's information we want to update.
      */
-    public void updateUser(int id, User updateUser) {
+    public boolean updateUser(int id, User updateUser) {
+        boolean match = users.stream()
+                .anyMatch(user -> user.getId() == id);
+        if (!match) return false;
         users = users.stream()
                 .peek(user -> {
                     if (user.getId() == id) {
@@ -70,5 +73,6 @@ public class UserDaoService {
                         user.setAge(updateUser.getAge());
                     }
                 }).collect(Collectors.toList());
+        return true;
     }
 }
