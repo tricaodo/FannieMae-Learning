@@ -32,11 +32,16 @@ public class __Stream {
 
         // 4. Found a specific person and return.
         Optional<Person> matchingPerson = people.stream()
-                .filter(person -> person.getName().equals("Jesssica"))
+                .filter(person -> person.getName().equals("Jessica"))
                 .findFirst();
         Person foundPerson = matchingPerson.orElse(null);
         System.out.println("Found person: " + foundPerson);
 
+
+        // 5. Count the names' length.
+        people.stream()
+                .map(Person::getName)
+                .forEach(name -> System.out.println(name + " - " + name.length()));
     }
 
     static Supplier<List<Person>> listSupplier = ()

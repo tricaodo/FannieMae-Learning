@@ -3,6 +3,7 @@ package funtionalinterface;
 import models.Gender;
 import models.Person;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -17,7 +18,7 @@ public class __Supplier {
     }
 
     static Supplier<List<Person>> listSupplier = ()
-            -> List.of(
+            -> Arrays.asList(
             new Person("John", Gender.MALE),
             new Person("Alice", Gender.FEMALE),
             new Person("Luis", Gender.MALE),
