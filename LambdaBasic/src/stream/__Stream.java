@@ -3,9 +3,7 @@ package stream;
 import models.Gender;
 import models.Person;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -42,6 +40,19 @@ public class __Stream {
         people.stream()
                 .map(Person::getName)
                 .forEach(name -> System.out.println(name + " - " + name.length()));
+
+        // 6. The usage of flatmap.
+        List<List<Integer>> pairs = new ArrayList<>(Arrays.asList(
+                Arrays.asList(1, 2),
+                Arrays.asList(3, 4),
+                Arrays.asList(5, 6),
+                Arrays.asList(7, 8),
+                Arrays.asList(9, 10)
+        ));
+        pairs.stream()
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList())
+                .forEach(System.out::println);
     }
 
     static Supplier<List<Person>> listSupplier = ()
