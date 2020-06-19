@@ -15,30 +15,30 @@ public class UserController {
     private UserDaoService services;
 
     @GetMapping(path = "/users")
-    public List<User> getAllUsers(){
+    public List<User> getAllUsers() {
         return services.getUsers();
     }
 
     @GetMapping(path = "/users/{id}")
-    public User getUserById(@PathVariable int id){
+    public User getUserById(@PathVariable int id) {
         User user = services.getUserById(id);
-        if(user == null) throw new UserNotFoundException("The user with id " + id + " not found");
+        if (user == null) throw new UserNotFoundException("The user with id " + id + " not found");
         return user;
     }
 
     @PostMapping(path = "/users")
-    public void addUser(@RequestBody User user){
+    public void addUser(@RequestBody User user) {
         services.addUser(user);
     }
 
     @DeleteMapping(path = "/users/{id}")
-    public void deleteUser(@PathVariable int id){
-        if(services.deleteUser(id) == null)
+    public void deleteUser(@PathVariable int id) {
+        if (services.deleteUser(id) == null)
             throw new UserNotFoundException("The user with id " + id + " not found");
     }
 
     @PutMapping(path = "/users/{id}")
-    public void updateUser(@PathVariable int id, @RequestBody User user){
-        if(!services.updateUser(id, user)) throw new UserNotFoundException("The user with id " + id + " not found");
+    public void updateUser(@PathVariable int id, @RequestBody User user) {
+        if (!services.updateUser(id, user)) throw new UserNotFoundException("The user with id " + id + " not found");
     }
 }

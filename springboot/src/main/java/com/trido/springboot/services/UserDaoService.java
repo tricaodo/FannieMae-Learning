@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.OptionalInt;
 import java.util.stream.IntStream;
 
 @Service
@@ -51,12 +50,11 @@ public class UserDaoService {
      * @return {@code user} if any elements were removed.
      */
     public User deleteUser(int id) {
-        Optional<User> optional = IntStream.range(0, users.size())
+        int idx = IntStream.range(0, users.size())
                 .filter(i -> users.get(i).getId() == id)
-                .boxed()
                 .findAny()
-                .map(i -> users.remove((int) i));
-        return optional.orElse(null);
+                .orElse(-1);
+        return idx == -1 ? null : users.remove(idx);
     }
 
     /**
@@ -64,17 +62,13 @@ public class UserDaoService {
      * @param updateUser the new user's information we want to update.
      */
     public boolean updateUser(int id, User updateUser) {
-
-        OptionalInt optionalInt = IntStream.range(0, users.size())
+        return IntStream.range(0, users.size())
                 .filter(i -> users.get(i).getId() == id)
-                .findFirst();
-
-        if (!optionalInt.isPresent()) return false;
-        int idx = optionalInt.getAsInt();
-
-        User user = users.get(idx);
-        user.setName(updateUser.getName());
-        user.setAge(updateUser.getAge());
-        return true;
+                .anyMatch(i -> {
+                    User currentUser = users.get(i);
+                    currentUser.setName(updateUser.getName());
+                    currentUser.setAge(updateUser.getAge());
+                    return true;
+                });
     }
 }
