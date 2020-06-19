@@ -1,19 +1,21 @@
 package com.trido.springboot.services;
 
 import com.trido.springboot.models.User;
-import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
-@Service
-public class UserDaoService {
+@Repository
+@Qualifier("fakeDAO")
+public class UserDaoService implements IUserDaoService {
     private List<User> users = new ArrayList<>(List.of(
             new User(1, "John", 23),
             new User(2, "Kelly", 34),
-            new User(3, "Terry", 27),
+            new User(3, "Terry",    27),
             new User(4, "Jessica", 25),
             new User(5, "Susan", 32),
             new User(6, "Tiffany", 42)
@@ -23,6 +25,7 @@ public class UserDaoService {
     /**
      * @return the entire list of users.
      */
+    @Override
     public List<User> getUsers() {
         return users;
     }
@@ -31,6 +34,7 @@ public class UserDaoService {
      * @param id the user's id which we want to access.
      * @return the specific user's information.
      */
+    @Override
     public User getUserById(int id) {
         Optional<User> matchingUser = users.stream()
                 .filter(user -> user.getId() == id).findFirst();
@@ -40,6 +44,7 @@ public class UserDaoService {
     /**
      * @param user the user we want to add.
      */
+    @Override
     public void addUser(User user) {
         user.setId(++countId);
         users.add(user);
@@ -49,6 +54,7 @@ public class UserDaoService {
      * @param id the user's id which we want to delete.
      * @return {@code user} if any elements were removed.
      */
+    @Override
     public User deleteUser(int id) {
         int idx = IntStream.range(0, users.size())
                 .filter(i -> users.get(i).getId() == id)
@@ -61,6 +67,7 @@ public class UserDaoService {
      * @param id         the user's id which we want to update.
      * @param updateUser the new user's information we want to update.
      */
+    @Override
     public boolean updateUser(int id, User updateUser) {
         return IntStream.range(0, users.size())
                 .filter(i -> users.get(i).getId() == id)

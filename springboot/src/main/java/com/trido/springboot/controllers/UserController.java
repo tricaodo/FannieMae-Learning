@@ -2,7 +2,7 @@ package com.trido.springboot.controllers;
 
 import com.trido.springboot.exceptions.UserNotFoundException;
 import com.trido.springboot.models.User;
-import com.trido.springboot.services.UserDaoService;
+import com.trido.springboot.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +12,7 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    private UserDaoService services;
+    private UserService services;
 
     @GetMapping(path = "/users")
     public List<User> getAllUsers() {
